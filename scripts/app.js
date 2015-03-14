@@ -9,7 +9,7 @@ app.config([ '$routeProvider', '$locationProvider', function ($routeProvider) {
 		controller : 'summaryController'
 	}).when('/:name', {
 		templateUrl : 'pages/secondPage.html',
-		controller : 'firstController'
+		controller : 'addEmpController'
 		
 	}).when('/name/:details', {
         templateUrl : 'pages/thirdPage.html',
@@ -21,61 +21,62 @@ app.config([ '$routeProvider', '$locationProvider', function ($routeProvider) {
 } ]);
 
 
-app.factory('items', function () {
+app.service('empService', function () {
     'use strict';
-    var items = [], itemsService = {};
-     
-    
-    itemsService.add = function (item) {
-        items.push(item);
+    var employeelist = [], addEmployee = function (emp) {
+        employeelist.push(emp);
+    }, getEmployeeList = function () {
+        return employeelist;
     };
-    itemsService.list = function () {
-        return items;
+
+    return {
+        addEmployee: addEmployee,
+        getEmployeeList: getEmployeeList
     };
-    
-    return itemsService;
+
 });
 
 
 
-app.controller('summaryController', ['$scope', 'Service', function ($scope) {
+app.controller('summaryController', ['$scope', '$rootScope', '$location', 'empService', function ($scope, $rootScope, $location, empService) {
     'use strict';
-    
+   
+    $scope.enter = function (path) {$location.path(path); };
+    $scope.employeelist = empService.getEmployeeList();
 }]);
 
-app.controller('firstController', ['$scope', '$rootScope', '$location', 'Service', function ($scope, $rootScope, $location) {
+app.controller('addEmpController', ['$scope', '$rootScope', '$location', 'empService', function ($scope, $rootScope, $location, empService) {
 	'use strict';
     var item, newItem;
-    $scope.enter = function (path) {$location.path(path); };
+    
 	
     $scope.go = function (path) {$location.path(path); };
  
-    $scope.employeelist = [{
+    /*$scope.employeelist = [{
         'fName': 'Rohit',
         'lName': 'kumar',
         'eId': 'Rohit_Kumar@syntelinc.com',
         'pNumber' : '9015409791'
-    }];
-
+    }];*/
+    
       
-    for (item in localStorage ) {
-        if (localStorage.hasOwnProperty(item)) {
-            newItem = JSON.parse(localStorage[item]);
-            $scope.employeelist.push(newItem);
-        }
-    }
+//    for (item in localStorage ) {
+//        if (localStorage.hasOwnProperty(item)) {
+//            newItem = JSON.parse(localStorage[item]);
+//            $scope.employeelist.push(newItem);
+//        }
+//    }
     
     $scope.addRow = function (data) {
 	
         var emp = {
             'fName': data.fname,
-            'lName': data.fname,
+            'lName': data.lname,
             'eId': data.eid,
             'pNumber' : data.pnumbr
         }, path = "/";
         
-       
-        $scope.employeelist.push(emp);
+        empService.addEmployee(emp);
         $location.path(path);
 	//localStorage.setItem( 'item' + localStorage.length, JSON.stringify(emp) );	  
 	};

@@ -12,19 +12,19 @@
         <br> <b> EMPLOYEE TABLE :: </b> 
         <br>
         <br/>
-        <table class="table" style="width:100%" border="1px">
-            <tr>
-                <th>FIRST NAME</th>
-                <th>LAST NAME</th>
-                <th>EMAIL ID</th>
-                <th>Phone Number</th>
-            </tr>
-            <tr ng-repeat="employee in employeelist">
-                <td>{{employee.fName}}</td>
-                <td>{{employee.lName}}</td>
-                <td>{{employee.eId}}</td>
-                <td>{{employee.pNumber}}</td>
-            </tr>
-        </table>
+        
+        Any: <input ng-model="search.$"> <br>
+        Name only <input ng-model="search.fName"><br>
+        Phone only <input ng-model="search.lName"><br>
+        Equality <input type="checkbox" ng-model="strict"><br>
+        
+        <div>
+            <li >FIRST NAME  |    LAST NAME   |   EMAIL ID    |   Phone Number</li>
+            <ul ng-repeat="emp in employeelist  | filter:search:strict" >
+                
+                <li >{{emp.fName   }} {{emp.lName}} {{emp.eId}} {{emp.pNumber}}</labe> </li>
+            </ul>
+        </div>
+
         
 	</div>
