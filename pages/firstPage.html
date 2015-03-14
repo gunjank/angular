@@ -1,0 +1,30 @@
+
+	<div>
+		<h1>Summary Page</h1>
+		
+		<p>		
+			<button id="enter" ng-click="enter('/name')">Add an Employee</button>
+		</p>
+<!-- 		<p>		 -->
+<!-- 			<button id="third" ng-click="go('/name/details')">Go to Edit Page</button> -->
+<!-- 		</p> -->
+		 <br/>
+        <br> <b> EMPLOYEE TABLE :: </b> 
+        <br>
+        <br/>
+        <table class="table" style="width:100%" border="1px">
+            <tr>
+                <th>FIRST NAME</th>
+                <th>LAST NAME</th>
+                <th>EMAIL ID</th>
+                <th>Phone Number</th>
+            </tr>
+            <tr ng-repeat="employee in employeelist">
+                <td>{{employee.fName}}</td>
+                <td>{{employee.lName}}</td>
+                <td>{{employee.eId}}</td>
+                <td>{{employee.pNumber}}</td>
+            </tr>
+        </table>
+        
+	</div>
